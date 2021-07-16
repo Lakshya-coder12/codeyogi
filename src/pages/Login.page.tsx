@@ -2,37 +2,44 @@ import React from "react";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { FiUser, FiLock } from "react-icons/fi";
+import { FaSpinner } from "react-icons/fa";
 import { Switch } from "@headlessui/react";
+import * as yup from "yup";
+import { useFormik } from "formik";
 
 interface Props {}
 
 const Login: React.FC<Props> = (props) => {
-  const [data, setData] = useState({ email: "", password: "" });
-  const [touched, setTouched] = useState({ email: false, password: false });
   const [enabled, setEnabled] = useState(false);
   const history = useHistory();
+  const formValidator = yup.object().shape({
+    email: yup.string().required().email(),
+    password: yup.string().required().min(8),
+  });
+  const {
+    values,
+    handleBlur,
+    handleChange,
+    isSubmitting,
+    touched,
+    errors,
+    handleSubmit,
+    isValid,
+  } = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+    },
+    validationSchema: formValidator,
+    onSubmit: (values, { setSubmitting }) => {
+      setSubmitting(true);
+      console.log(values);
+      setTimeout(() => {
+        history.push("/dashboard");
+      }, 5000);
+    },
+  });
 
-  const changeHandler = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [event.target.name]: event.target.value });
-  };
-
-  const blurHandler = (event: React.FocusEvent<HTMLInputElement>) => {
-    setTouched({ ...touched, [event.target.name]: true });
-  };
-  let emailError = "";
-  let passwordError = "";
-
-  if (!data.email) {
-    emailError = "Email address is required";
-  } else if (!data.email.endsWith("@gmail.com")) {
-    emailError = "Please enter a valid email address";
-  }
-
-  if (!data.password) {
-    passwordError = "Password is required";
-  } else if (data.password.length < 8) {
-    passwordError = "Password should be at least 8 characters";
-  }
   return (
     <div className="px-10 py-20 mx-auto">
       <h2 className="text-4xl">
@@ -46,18 +53,7 @@ const Login: React.FC<Props> = (props) => {
           </span>
         </Link>{" "}
       </p>
-      <form
-        className="mt-10"
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (emailError || passwordError) {
-            console.log("form submission rejected");
-            return;
-          }
-          console.log(data);
-          history.push("/dashboard");
-        }}
-      >
+      <form className="mt-10" onSubmit={handleSubmit}>
         <div className="pt-3 pb-6">
           <label htmlFor="email-address" className="sr-only">
             Email address
@@ -68,15 +64,15 @@ const Login: React.FC<Props> = (props) => {
               className="w-full pl-4 outline-none"
               placeholder="Username"
               type="email"
-              value={data.email}
-              onChange={changeHandler}
-              onBlur={blurHandler}
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
               name="email"
               autoComplete="email"
               required
             ></input>
           </div>
-          {touched.email && <div className="text-red-500">{emailError}</div>}
+          {touched.email && <div className="text-red-500">{errors.email}</div>}
         </div>
         <div className="pt-3 pb-6 mb-2">
           <label htmlFor="password" className="sr-only">
@@ -89,18 +85,18 @@ const Login: React.FC<Props> = (props) => {
               placeholder="Password"
               type="password"
               name="password"
-              value={data.password}
-              onChange={changeHandler}
-              onBlur={blurHandler}
+              value={values.password}
+              onChange={handleChange}
+              onBlur={handleBlur}
               autoComplete="current-password"
               required
             ></input>
           </div>
           {touched.password && (
-            <div className="text-red-500">{passwordError}</div>
+            <div className="text-red-500">{errors.password}</div>
           )}
         </div>
-        <div className="flex justify-between">
+        <div className="flex items-center justify-between">
           <Switch.Group>
             <div className="flex items-center">
               <Switch.Label passive className="mr-2 text-sm">
@@ -123,12 +119,18 @@ const Login: React.FC<Props> = (props) => {
               </Switch>
             </div>
           </Switch.Group>
-          <button
-            type="submit"
-            className="px-5 py-2 text-sm text-white bg-blue-600 rounded-md"
-          >
-            Log In
-          </button>
+          <div className="flex items-center">
+            {isSubmitting && (
+              <FaSpinner className="w-6 h-6 mr-2 animate-spin"></FaSpinner>
+            )}
+            <button
+              disabled={!isValid}
+              type="submit"
+              className="px-5 py-2 text-sm text-white bg-blue-600 rounded-md"
+            >
+              Log In
+            </button>
+          </div>
         </div>
         <div className="mt-16 mb-2 text-center">
           <label className="inline-flex items-center">
