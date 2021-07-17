@@ -6,12 +6,14 @@ import { FaSpinner } from "react-icons/fa";
 import { Switch } from "@headlessui/react";
 import * as yup from "yup";
 import { useFormik } from "formik";
+import Input from "../components/Input";
 
 interface Props {}
 
 const Login: React.FC<Props> = (props) => {
   const [enabled, setEnabled] = useState(false);
   const history = useHistory();
+  const svgClass = "w-6 h-6 text-blue-600";
   const formValidator = yup.object().shape({
     email: yup.string().required().email(),
     password: yup.string().required().min(8),
@@ -53,49 +55,34 @@ const Login: React.FC<Props> = (props) => {
           </span>
         </Link>{" "}
       </p>
-      <form className="mt-10" onSubmit={handleSubmit}>
-        <div className="pt-3 pb-6">
-          <label htmlFor="email-address" className="sr-only">
-            Email address
-          </label>
-          <div className="flex items-center pb-3 border-b border-gray-400">
-            <FiUser className="w-6 h-6 text-blue-600"></FiUser>
-            <input
-              className="w-full pl-4 outline-none"
-              placeholder="Username"
-              type="email"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              name="email"
-              autoComplete="email"
-              required
-            ></input>
-          </div>
-          {touched.email && <div className="text-red-500">{errors.email}</div>}
-        </div>
-        <div className="pt-3 pb-6 mb-2">
-          <label htmlFor="password" className="sr-only">
-            Password
-          </label>
-          <div className="flex items-center pb-3 border-b border-gray-400">
-            <FiLock className="w-6 h-6 text-blue-600"></FiLock>
-            <input
-              className="w-full pl-4 outline-none"
-              placeholder="Password"
-              type="password"
-              name="password"
-              value={values.password}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              autoComplete="current-password"
-              required
-            ></input>
-          </div>
-          {touched.password && (
-            <div className="text-red-500">{errors.password}</div>
-          )}
-        </div>
+      <form className="mt-12" onSubmit={handleSubmit}>
+        <Input
+          touched={touched.email}
+          error={errors.email}
+          placeholder="Email Address"
+          type="email"
+          value={values.email}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          id="email"
+          autoComplete="email"
+          svg={<FiUser className="w-6 h-6 text-blue-600"></FiUser>}
+          required
+        />
+        <Input
+          touched={touched.password}
+          className="mb-2"
+          error={errors.password}
+          placeholder="Password"
+          type={enabled ? "text" : "password"}
+          value={values.password}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          id="password"
+          autoComplete="current-password"
+          svg={<FiLock className={svgClass}></FiLock>}
+          required
+        />
         <div className="flex items-center justify-between">
           <Switch.Group>
             <div className="flex items-center">
@@ -105,6 +92,7 @@ const Login: React.FC<Props> = (props) => {
               <Switch
                 checked={enabled}
                 onChange={setEnabled}
+                type="button"
                 className={`${
                   enabled ? "bg-blue-600" : "bg-gray-200"
                 } relative inline-flex items-center h-4 rounded-full w-9 transition-colors focus:outline-none `}
@@ -120,9 +108,7 @@ const Login: React.FC<Props> = (props) => {
             </div>
           </Switch.Group>
           <div className="flex items-center">
-            {isSubmitting && (
-              <FaSpinner className="w-6 h-6 mr-2 animate-spin"></FaSpinner>
-            )}
+            {isSubmitting && <FaSpinner className={svgClass}></FaSpinner>}
             <button
               disabled={!isValid}
               type="submit"
