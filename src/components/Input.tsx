@@ -22,7 +22,7 @@ const Input: React.FC<Props> = ({
           {placeholder}
         </label>
       )}
-      <div className="flex items-center pb-2.5 border-b border-gray-200">
+      <div className="flex items-center pb-2.5 border-b border-gray-200 focus-within:border-blue-600">
         {svg}
         <input
           {...rest}
