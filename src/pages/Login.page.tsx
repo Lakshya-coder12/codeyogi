@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { FiUser, FiLock } from "react-icons/fi";
+import { FiAtSign, FiLock } from "react-icons/fi";
 import { FaSpinner } from "react-icons/fa";
 import { Switch } from "@headlessui/react";
 import * as yup from "yup";
@@ -44,7 +44,7 @@ const Login: React.FC<Props> = (props) => {
 
   return (
     <div className="px-10 py-20 mx-auto">
-      <h2 className="text-4xl">
+      <h2 className="text-40">
         Log In to <span className="font-semibold text-blue-600">CODEYOGI</span>
       </h2>
       <p className="mt-2 text-sm font-semibold">
@@ -55,18 +55,18 @@ const Login: React.FC<Props> = (props) => {
           </span>
         </Link>{" "}
       </p>
-      <form className="mt-12" onSubmit={handleSubmit}>
+      <form className="mt-12.5" onSubmit={handleSubmit}>
         <Input
           touched={touched.email}
           error={errors.email}
-          placeholder="Email Address"
+          placeholder="Email"
           type="email"
           value={values.email}
           onChange={handleChange}
           onBlur={handleBlur}
           id="email"
           autoComplete="email"
-          svg={<FiUser className="w-6 h-6 text-blue-600"></FiUser>}
+          svg={<FiAtSign className={svgClass}></FiAtSign>}
           required
         />
         <Input
@@ -108,7 +108,9 @@ const Login: React.FC<Props> = (props) => {
             </div>
           </Switch.Group>
           <div className="flex items-center">
-            {isSubmitting && <FaSpinner className={svgClass}></FaSpinner>}
+            {isSubmitting && (
+              <FaSpinner className="mr-2 animate-spin"></FaSpinner>
+            )}
             <button
               disabled={!isValid}
               type="submit"
@@ -120,7 +122,7 @@ const Login: React.FC<Props> = (props) => {
         </div>
         <div className="mt-16 mb-2 text-center">
           <label className="inline-flex items-center">
-            <input type="checkbox" className="form-checkbox" />
+            <input type="checkbox" className="w-4 h-4" />
             <span className="ml-2 text-sm text-gray-400">
               Keep me logged in
             </span>
@@ -134,12 +136,12 @@ const Login: React.FC<Props> = (props) => {
           </Link>
         </div>
       </form>
-      <div className="mt-24">
+      <div className="mt-22.5">
         <p className="text-sm text-center w-96">
           {" "}
           &copy; 2020 All Rights Reserved.{" "}
           <span className="font-semibold text-blue-600 cursor-pointer">
-            Codeyogi
+            CODEYOGI
           </span>{" "}
           is a product of Devslane.{" "}
           <span className="font-semibold text-blue-600 cursor-pointer">
