@@ -13,7 +13,6 @@ interface Props {}
 const Login: React.FC<Props> = (props) => {
   const [enabled, setEnabled] = useState(false);
   const history = useHistory();
-  const svgClass = "w-6 h-6 text-blue-600";
   const formValidator = yup.object().shape({
     email: yup.string().required().email(),
     password: yup.string().required().min(8),
@@ -66,7 +65,7 @@ const Login: React.FC<Props> = (props) => {
           onBlur={handleBlur}
           id="email"
           autoComplete="email"
-          svg={<FiAtSign className={svgClass}></FiAtSign>}
+          Icon={FiAtSign}
           required
         />
         <Input
@@ -80,7 +79,7 @@ const Login: React.FC<Props> = (props) => {
           onBlur={handleBlur}
           id="password"
           autoComplete="current-password"
-          svg={<FiLock className={svgClass}></FiLock>}
+          Icon={FiLock}
           required
         />
         <div className="flex items-center justify-between">
