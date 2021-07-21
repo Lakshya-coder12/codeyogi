@@ -4,8 +4,9 @@ import { Link, useHistory } from "react-router-dom";
 import { FiUser, FiLock, FiAtSign } from "react-icons/fi";
 import { FaSpinner } from "react-icons/fa";
 import * as yup from "yup";
-import Input from "../components/Input";
+import Input from "../components/Input/Input";
 import { Switch } from "@headlessui/react";
+import Button from "../components/Button/Button";
 
 interface Props {}
 
@@ -135,13 +136,9 @@ const Signup: React.FC<Props> = (props) => {
             {isSubmitting && (
               <FaSpinner className="mr-2 animate-spin"></FaSpinner>
             )}
-            <button
-              disabled={!isValid}
-              type="submit"
-              className="px-5 py-2 text-sm text-white bg-blue-600 rounded-md"
-            >
+            <Button theme="primary" disabled={!isValid} type="submit">
               Get Started!
-            </button>
+            </Button>
           </div>
         </div>
       </form>

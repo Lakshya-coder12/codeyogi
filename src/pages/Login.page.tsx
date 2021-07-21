@@ -6,7 +6,8 @@ import { FaSpinner } from "react-icons/fa";
 import { Switch } from "@headlessui/react";
 import * as yup from "yup";
 import { useFormik } from "formik";
-import Input from "../components/Input";
+import Input from "../components/Input/Input";
+import Button from "../components/Button/Button";
 
 interface Props {}
 
@@ -110,13 +111,9 @@ const Login: React.FC<Props> = (props) => {
             {isSubmitting && (
               <FaSpinner className="mr-2 animate-spin"></FaSpinner>
             )}
-            <button
-              disabled={!isValid}
-              type="submit"
-              className="px-5 py-2 text-sm text-white bg-blue-600 rounded-md"
-            >
+            <Button theme="primary" disabled={!isValid} type="submit">
               Log In
-            </button>
+            </Button>
           </div>
         </div>
         <div className="mt-16 mb-2 text-center">
