@@ -1,14 +1,14 @@
 import React from "react";
 
 interface Props {
-  width: number;
+  progress: number;
   theme?: "blue" | "red" | "green" | "black" | "yellow";
 }
 
-const ProgressBar: React.FC<Props> = ({ width, theme }) => {
+const ProgressBar: React.FC<Props> = ({ progress, theme }) => {
   let themeClass = "";
-  if (width > 100) {
-    width = 100;
+  if (progress > 100) {
+    progress = 100;
   }
   console.log(theme);
   if (theme === "blue") {
@@ -28,7 +28,7 @@ const ProgressBar: React.FC<Props> = ({ width, theme }) => {
       <div className="w-full h-4 bg-gray-200 rounded-full">
         <div
           className={"h-full rounded-full " + themeClass}
-          style={{ width: `${width}%` }}
+          style={{ width: `${progress}%` }}
         ></div>
       </div>
     </div>
