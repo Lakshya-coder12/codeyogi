@@ -2,10 +2,17 @@ import React, { ImgHTMLAttributes } from "react";
 
 interface Props extends ImgHTMLAttributes<HTMLImageElement> {
   online?: boolean;
+  requireStatus?: boolean;
   src: string;
 }
 
-const Avatar: React.FC<Props> = ({ online, src, className, ...rest }) => {
+const Avatar: React.FC<Props> = ({
+  online,
+  src,
+  className,
+  requireStatus,
+  ...rest
+}) => {
   const statusClass = online === true ? "bg-green-600" : "bg-gray-400";
   return (
     <button className={"relative " + className}>
@@ -15,7 +22,7 @@ const Avatar: React.FC<Props> = ({ online, src, className, ...rest }) => {
         alt="profile"
         className="object-cover w-16 h-16 border-2 border-white rounded-full "
       />
-      {online && (
+      {requireStatus && (
         <div
           className={
             "absolute bottom-0 w-4 h-4 border-2 border-white rounded-full right-2 " +
@@ -27,6 +34,9 @@ const Avatar: React.FC<Props> = ({ online, src, className, ...rest }) => {
   );
 };
 
-Avatar.defaultProps = {};
+Avatar.defaultProps = {
+  online: false,
+  requireStatus: false,
+};
 
 export default React.memo(Avatar);
