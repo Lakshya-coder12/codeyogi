@@ -33,41 +33,48 @@ const Dashboard: React.FC<Props> = ({ user }) => {
     fetchData();
   }, [query]);
   return (
-    <div className="flex items-center px-10 space-x-10">
-      <div className="flex-1">
-        <Input
-          Icon={FiSearch}
-          placeholder="Type Group name"
-          className="mt-8"
-          onChange={handleChange}
-        />
-        {data &&
-          data.map((element, index) => (
-            <GroupListItem
-              imgURL={element.group_img_url}
-              groupTitle={element.name}
-              key={index}
-            />
-          ))}
+    <div>
+      <div className="mx-10 my-6 bg-gray-100 rounded-lg">
+        <div className="p-5 text-2xl font-semibold text-gray-700">
+          {`Welcome! ${user.first_name} ${user.middle_name} ${user.last_name}`}
+        </div>
       </div>
-      <div className="flex-1">
-        <div className="flex items-center">
+      <div className="flex items-center px-10 space-x-10">
+        <div className="flex-1">
           <Input
             Icon={FiSearch}
             placeholder="Type Group name"
             className="mt-8"
-            onChange={(e) => setInputData(e.target.value)}
+            onChange={handleChange}
           />
-          <Button onClick={() => setQuery(inputData)}>Find</Button>
+          {data &&
+            data.map((element, index) => (
+              <GroupListItem
+                imgURL={element.group_img_url}
+                groupTitle={element.name}
+                key={index}
+              />
+            ))}
         </div>
-        {data &&
-          data.map((element, index) => (
-            <GroupListItem
-              imgURL={element.group_img_url}
-              groupTitle={element.name}
-              key={index}
+        <div className="flex-1">
+          <div className="flex items-center">
+            <Input
+              Icon={FiSearch}
+              placeholder="Type Group name"
+              className="mt-8"
+              onChange={(e) => setInputData(e.target.value)}
             />
-          ))}
+            <Button onClick={() => setQuery(inputData)}>Find</Button>
+          </div>
+          {data &&
+            data.map((element, index) => (
+              <GroupListItem
+                imgURL={element.group_img_url}
+                groupTitle={element.name}
+                key={index}
+              />
+            ))}
+        </div>
       </div>
     </div>
   );
