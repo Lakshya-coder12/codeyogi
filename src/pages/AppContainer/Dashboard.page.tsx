@@ -6,10 +6,13 @@ import { FiSearch } from "react-icons/fi";
 import Input from "../../components/Input/Input";
 import GroupListItem from "../../components/GroupListItem";
 import Button from "../../components/Button/Button";
+import { User } from "../../models/User";
 
-interface Props {}
+interface Props {
+  user: User;
+}
 
-const Dashboard: React.FC<Props> = (props) => {
+const Dashboard: React.FC<Props> = ({ user }) => {
   const [query, setQuery] = useState("");
   const [inputData, setInputData] = useState("");
   const [data, setData] = useState<GroupResponseElement[] | void>([]);
