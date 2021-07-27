@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useEffect } from "react";
-import { fetchGroups, GroupResponseElement } from "../api";
+import { fetchGroups } from "../api/groups";
+import { GroupResponseElement } from "../models/Groups";
 import { FiSearch } from "react-icons/fi";
 import Input from "../components/Input/Input";
 import GroupListItem from "../components/GroupListItem";
