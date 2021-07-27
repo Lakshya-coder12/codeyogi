@@ -7,7 +7,7 @@ export default {
     theme: {
       control: "select",
     },
-    width: {
+    progress: {
       control: {
         type: "range",
         min: 0,
@@ -20,6 +20,6 @@ export default {
 export const main = (args: any) => <ProgressBar {...args}></ProgressBar>;
 
 main.args = {
-  width: 50,
+  progress: 50,
   theme: "blue",
 };
