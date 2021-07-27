@@ -1,7 +1,7 @@
 import React from "react";
 import SidebarLink from "./SidebarLink";
 import { FiCpu, FiHome } from "react-icons/fi";
-import { logout } from "../api";
+import { logout } from "../api/auth";
 
 interface Props {}
 

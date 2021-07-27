@@ -8,7 +8,7 @@ import * as yup from "yup";
 import { useFormik } from "formik";
 import Input from "../components/Input/Input";
 import Button from "../components/Button/Button";
-import { login } from "../api";
+import { login } from "../api/auth";
 
 interface Props {}
 

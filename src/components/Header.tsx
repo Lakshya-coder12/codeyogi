@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useState } from "react";
 import { FiMenu, FiChevronDown, FiCpu, FiHome } from "react-icons/fi";
-import { logout } from "../api";
+import { logout } from "../api/auth";
 import SidebarLink from "./SidebarLink";
 
 interface Props {}
