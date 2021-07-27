@@ -20,17 +20,9 @@ const Dashboard: React.FC<Props> = ({ user }) => {
     setQuery(event.target.value);
   };
   useEffect(() => {
-    async function fetchData() {
-      const fetchedData = await fetchGroups({
-        status: "all-groups",
-        query,
-      }).then((result) => {
-        return result;
-      });
-      console.log(fetchedData);
-      setData(fetchedData);
-    }
-    fetchData();
+    fetchGroups({ status: "all-groups", query }).then((result) => {
+      setData(result);
+    });
   }, [query]);
   return (
     <div>
