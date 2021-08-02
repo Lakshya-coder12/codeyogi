@@ -23,4 +23,5 @@ main.args = {
   placeholder: "Username",
   touched: "false",
   error: "enter valid data",
+  borderStyle: "open",
 };
