@@ -6,24 +6,26 @@ import { FaSpinner } from "react-icons/fa";
 import NotFoundPage from "./pages/NotFound.page";
 import AuthPageLazy from "./pages/Auth/Auth.lazy";
 import AppContainerPageLazy from "./pages/AppContainer/AppContainer.lazy";
-import { useState } from "react";
-import { User } from "./models/User";
 import { me } from "./api/auth";
+import { useDispatch } from "react-redux";
+import { meFetchAction, useAppSelector } from "./store";
 
 function App() {
-  const [user, setUser] = useState<User>();
+  const user = useAppSelector((state) => state.me);
+  const dispatch = useDispatch();
   const token = localStorage.getItem(LS_AUTH_TOKEN);
 
   useEffect(() => {
     if (!token) {
       return;
     }
-    me().then((u) => setUser(u));
-  });
+    me().then((u) => dispatch(meFetchAction(u)));
+  }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user && token) {
     return (
       <div>
+        ...loading
         <FaSpinner className="w-5 h-5 animate-spin" />
       </div>
     );
@@ -39,7 +41,7 @@ function App() {
             <Redirect to="/dashboard" />
           ) : (
             <Suspense fallback={<FaSpinner className="w-5 h-5 animate-spin" />}>
-              <AuthPageLazy onLogin={setUser} />
+              <AuthPageLazy />
             </Suspense>
           )}
         </Route>
@@ -47,16 +49,13 @@ function App() {
           path={[
             "/dashboard",
             "/recordings",
+            "/profile",
             "/batch/:batchNumber/lecture/:lectureNumber",
           ]}
           exact
         >
           <Suspense fallback={<FaSpinner className="w-5 h-5 animate-spin" />}>
-            {user ? (
-              <AppContainerPageLazy user={user!} />
-            ) : (
-              <Redirect to="/login" />
-            )}
+            {user ? <AppContainerPageLazy /> : <Redirect to="/login" />}
           </Suspense>
         </Route>
         <Route>
