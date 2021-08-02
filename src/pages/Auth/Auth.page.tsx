@@ -1,21 +1,18 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import AuthHero from "../../components/AuthHero";
-import { User } from "../../models/User";
 import ForgotPassword from "./ForgotPassword.page";
 import LoginPage from "./Login.page";
 import SignupPage from "./Signup.page";
 
-interface Props {
-  onLogin: (user: User) => void;
-}
+interface Props {}
 
-const Auth: React.FC<Props> = ({ onLogin }) => {
+const Auth: React.FC<Props> = (props) => {
   return (
     <div className="flex flex-row justify-between">
       <Switch>
         <Route path="/login">
-          <LoginPage onLogin={onLogin} />
+          <LoginPage />
         </Route>
         <Route path="/signup">
           <SignupPage />
