@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useState } from "react";
 import { FiMenu, FiChevronDown, FiCpu, FiHome } from "react-icons/fi";
-import { logout } from "../api/auth";
 import SidebarLink from "./SidebarLink";
 
 interface Props {}
@@ -12,8 +11,8 @@ const Header: React.FC<Props> = (props) => {
   console.log("isMenuOpen is ", isMenuOpen);
   const svgClass = "w-5 h-5 text-gray-600";
   return (
-    <>
-      <div className="sticky z-10 flex items-center py-2 top-14 bg-header">
+    <div className="sticky z-10 top-14">
+      <div className="flex items-center py-2 bg-header">
         <div className="pl-4 pr-6">
           <FiMenu
             className="w-5 h-5"
@@ -56,15 +55,6 @@ const Header: React.FC<Props> = (props) => {
                   title="Home"
                   svg={<FiCpu className={svgClass} />}
                 />
-                <button
-                  onClick={() => {
-                    logout();
-                    window.location.href = "/login";
-                  }}
-                  className="px-4 py-2 mt-4 font-semibold bg-white hover:bg-gray-300 text-13"
-                >
-                  Logout
-                </button>
               </div>
             </div>
           </Transition.Child>
@@ -82,7 +72,7 @@ const Header: React.FC<Props> = (props) => {
           </Transition.Child>
         </Dialog>
       </Transition.Root>
-    </>
+    </div>
   );
 };
 
