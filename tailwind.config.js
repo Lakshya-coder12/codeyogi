@@ -7,6 +7,7 @@ module.exports = {
         navbar: "#0e1726",
         header: "#fafafa",
         sidebar: "#f1f2f3",
+        "profile-footer": "#191E3A",
       },
       fontSize: {
         40: "2.5rem",
