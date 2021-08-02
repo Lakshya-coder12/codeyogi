@@ -2,32 +2,35 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Header from "../../components/Header";
 import Navbar from "../../components/Navbar";
-import { User } from "../../models/User";
 import DashboardPage from "./Dashboard.page";
 import LecturePage from "./Lecture.page";
 import RecordingPage from "./Recording.page";
+import Profile from "./Profile.page";
 
-interface Props {
-  user: User;
-}
+interface Props {}
 
-const AppContainer: React.FC<Props> = ({ user }) => {
+const AppContainer: React.FC<Props> = (props) => {
   return (
     <>
-      <Navbar />
-      <Header />
-      <div className="flex flex-row">
-        <Switch>
-          <Route path="/dashboard">
-            <DashboardPage user={user} />
-          </Route>
-          <Route path="/recordings">
-            <RecordingPage />
-          </Route>
-          <Route path="/batch/:batchNumber/lecture/:lectureNumber">
-            <LecturePage />
-          </Route>
-        </Switch>
+      <div className="bg-gray-200">
+        <Navbar />
+        <Header />
+        <div>
+          <Switch>
+            <Route path="/dashboard">
+              <DashboardPage />
+            </Route>
+            <Route path="/recordings">
+              <RecordingPage />
+            </Route>
+            <Route path="/profile">
+              <Profile />
+            </Route>
+            <Route path="/batch/:batchNumber/lecture/:lectureNumber">
+              <LecturePage />
+            </Route>
+          </Switch>
+        </div>
       </div>
     </>
   );
