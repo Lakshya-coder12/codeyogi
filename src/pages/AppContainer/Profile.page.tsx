@@ -3,13 +3,14 @@ import Avatar from "../../components/Avatar/Avatar";
 import Input from "../../components/Input/Input";
 import "react-datepicker/dist/react-datepicker.css";
 import { Link } from "react-router-dom";
+import Button from "../../components/Button/Button";
 
 interface Props {}
 
 const Profile: React.FC<Props> = (props) => {
   return (
-    <div className="relative h-screen mx-4 mt-6">
-      <div className="p-5 bg-white rounded-md">
+    <div className="mx-4 mt-6">
+      <div className="relative p-5 bg-white rounded-md">
         <h2 className="mx-2 mt-1 mb-10 font-semibold text-gray-600">
           GENERAL INFORMATION
         </h2>
@@ -60,7 +61,12 @@ const Profile: React.FC<Props> = (props) => {
           </Link>
         </div>
       </div>
-      <div className="absolute h-14 bottom-3 bg-profile-footer"></div>
+      <div className="fixed bottom-0 right-4 left-4 rounded-t-md bg-profile-footer">
+        <div className="flex items-center justify-between mx-4 my-3">
+          <Button>Reset All</Button>
+          <Button theme="success">Save Changes</Button>
+        </div>
+      </div>
     </div>
   );
 };
