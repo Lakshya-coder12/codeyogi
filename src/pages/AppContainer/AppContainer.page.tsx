@@ -13,8 +13,10 @@ const AppContainer: React.FC<Props> = (props) => {
   return (
     <>
       <div className="bg-gray-200">
-        <Navbar />
-        <Header />
+        <div className="sticky top-0 z-10">
+          <Navbar />
+          <Header />
+        </div>
         <div>
           <Switch>
             <Route path="/dashboard">
