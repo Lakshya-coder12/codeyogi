@@ -8,10 +8,13 @@ import AuthPageLazy from "./pages/Auth/Auth.lazy";
 import AppContainerPageLazy from "./pages/AppContainer/AppContainer.lazy";
 import { me } from "./api/auth";
 import { useDispatch } from "react-redux";
-import { meFetchAction, useAppSelector } from "./store";
+import { useAppSelector } from "./store";
+import { meFetchAction } from "./actions/auth.actions";
 
 function App() {
-  const user = useAppSelector((state) => state.me);
+  const user = useAppSelector(
+    (state) => state.auth.id && state.users.byID[state.auth.id]
+  );
   const dispatch = useDispatch();
   const token = localStorage.getItem(LS_AUTH_TOKEN);
 
