@@ -1,7 +1,7 @@
 import { Dialog, Transition } from "@headlessui/react";
 import React, { Fragment, useState } from "react";
-import { FiMenu, FiChevronDown, FiCpu, FiHome } from "react-icons/fi";
-import SidebarLink from "./SidebarLink";
+import { FiMenu, FiChevronDown } from "react-icons/fi";
+import Sidebar from "./Sidebar";
 
 interface Props {}
 
@@ -9,7 +9,6 @@ const Header: React.FC<Props> = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuFullyOpen, setIsMenuFullyOpen] = useState(false);
   console.log("isMenuOpen is ", isMenuOpen);
-  const svgClass = "w-5 h-5 text-gray-600";
   return (
     <>
       <div className="flex items-center py-2 bg-header">
@@ -46,16 +45,7 @@ const Header: React.FC<Props> = (props) => {
             leaveTo="-translate-x-full"
           >
             <div className="fixed top-0 bottom-0 left-0 z-20 w-64 h-screen transform bg-sidebar">
-              <div className="pl-2.5 pt-2.5 pr-5 mt-5">
-                <SidebarLink
-                  title="Dashboard"
-                  svg={<FiHome className={svgClass} />}
-                />
-                <SidebarLink
-                  title="Home"
-                  svg={<FiCpu className={svgClass} />}
-                />
-              </div>
+              <Sidebar />
             </div>
           </Transition.Child>
           <Transition.Child
