@@ -1,26 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import { useEffect } from "react";
 import { fetchGroups } from "../../api/groups";
-import { GroupResponseElement } from "../../models/Groups";
 import { FiSearch } from "react-icons/fi";
 import GroupListItem from "../../components/GroupListItem";
-import Button from "../../components/Button/Button";
 import { useAppSelector } from "../../store";
+import { useDispatch } from "react-redux";
+import {
+  GROUPS_QUERY,
+  GROUPS_QUERY_COMPLETED,
+} from "../../actions/groups.action";
 
 interface Props {}
 
 const Dashboard: React.FC<Props> = (props) => {
-  const user = useAppSelector((state) => state.me);
-  const [query, setQuery] = useState("");
-  const [inputData, setInputData] = useState("");
-  const [data, setData] = useState<GroupResponseElement[] | void>([]);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setQuery(event.target.value);
-  };
+  const user = useAppSelector((state) => state.users.byID[state.auth.id!]);
+  const query = useAppSelector((state) => state.groups.query);
+  const groups = useAppSelector((state) => {
+    const groupIds = state.groups.queryMap[query] || [];
+    const groups = groupIds.map((id) => state.groups.byID[id]);
+    return groups;
+  });
+  const dispatch = useDispatch();
   useEffect(() => {
-    fetchGroups({ status: "all-groups", query }).then((result) => {
-      setData(result);
+    fetchGroups({ status: "all-groups", query }).then((groups) => {
+      dispatch({
+        type: GROUPS_QUERY_COMPLETED,
+        payload: { groups: groups, query },
+      });
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
   return (
     <div>
@@ -38,11 +46,13 @@ const Dashboard: React.FC<Props> = (props) => {
             <input
               className="w-full pl-4 placeholder-gray-300 focus:outline-none"
               placeholder="Type Group Name"
-              onChange={handleChange}
+              onChange={(e) => {
+                dispatch({ type: GROUPS_QUERY, payload: e.target.value });
+              }}
             />
           </div>
-          {data &&
-            data.map((element, index) => (
+          {groups &&
+            groups.map((element, index) => (
               <GroupListItem
                 imgURL={element.group_img_url}
                 groupTitle={element.name}
@@ -50,27 +60,29 @@ const Dashboard: React.FC<Props> = (props) => {
               />
             ))}
         </div>
-        <div className="flex-1">
+        {/* <div className="flex-1">
           <div className="flex space-x-6">
             <div className="flex items-center p-2 mb-6 bg-white border border-gray-600 rounded-md">
               <FiSearch className="w-6 h-6 text-blue-600" />
               <input
                 className="w-full pl-4 placeholder-gray-300 focus:outline-none"
                 placeholder="Type Group Name"
-                onChange={(e) => setInputData(e.target.value)}
+                onChange={(e) => {
+                  dispatch({ type: GROUPS_QUERY, payload: e.target.value });
+                }}
               />
             </div>
-            <Button onClick={() => setQuery(inputData)}>Find</Button>
+            <Button>Find</Button>
           </div>
-          {data &&
-            data.map((element, index) => (
+          {groups &&
+            groups.map((element, index) => (
               <GroupListItem
                 imgURL={element.group_img_url}
                 groupTitle={element.name}
                 key={index}
               />
             ))}
-        </div>
+        </div> */}
       </div>
     </div>
   );
