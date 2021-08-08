@@ -9,17 +9,18 @@ import {
   GROUPS_QUERY,
   GROUPS_QUERY_COMPLETED,
 } from "../../actions/groups.action";
+import { meSelector } from "../../selectors/auth.selectors";
+import {
+  groupQuerySelector,
+  groupSelector,
+} from "../../selectors/groups.selectors";
 
 interface Props {}
 
 const Dashboard: React.FC<Props> = (props) => {
-  const user = useAppSelector((state) => state.users.byID[state.auth.id!]);
-  const query = useAppSelector((state) => state.groups.query);
-  const groups = useAppSelector((state) => {
-    const groupIds = state.groups.queryMap[query] || [];
-    const groups = groupIds.map((id) => state.groups.byID[id]);
-    return groups;
-  });
+  const user = useAppSelector(meSelector);
+  const query = useAppSelector(groupQuerySelector);
+  const groups = useAppSelector(groupSelector);
   const dispatch = useDispatch();
   useEffect(() => {
     fetchGroups({ status: "all-groups", query }).then((groups) => {

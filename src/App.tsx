@@ -10,11 +10,10 @@ import { me } from "./api/auth";
 import { useDispatch } from "react-redux";
 import { useAppSelector } from "./store";
 import { meFetchAction } from "./actions/auth.actions";
+import { meSelector } from "./selectors/auth.selectors";
 
 function App() {
-  const user = useAppSelector(
-    (state) => state.auth.id && state.users.byID[state.auth.id]
-  );
+  const user = useAppSelector(meSelector);
   const dispatch = useDispatch();
   const token = localStorage.getItem(LS_AUTH_TOKEN);
 
