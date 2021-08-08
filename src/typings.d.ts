@@ -1,3 +1,3 @@
 interface Window {
-  _REDUX__DEVTOOLS_EXTENSION_: any;
+  __REDUX_DEVTOOLS_EXTENSION__: any;
 }
