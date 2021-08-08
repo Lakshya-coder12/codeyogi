@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GroupResponseElement } from "../models/Groups";
+import { Group } from "../models/Groups";
 import { BASE_URL } from "./base";
 
 interface GroupRequest {
@@ -10,7 +10,7 @@ interface GroupRequest {
 }
 
 export interface GroupResponse {
-  data: GroupResponseElement[];
+  data: Group[];
 }
 
 export const fetchGroups = (data: GroupRequest) => {
