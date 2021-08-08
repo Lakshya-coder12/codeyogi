@@ -53,6 +53,7 @@ function App() {
             "/recordings",
             "/profile",
             "/batch/:batchNumber/lecture/:lectureNumber",
+            "/groups",
           ]}
           exact
         >
