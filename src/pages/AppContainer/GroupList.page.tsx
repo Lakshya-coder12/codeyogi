@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
+import { FaSpinner } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
 import { groupActions } from "../../actions/groups.action";
-
 import { fetchGroups } from "../../api/groups";
 import GroupListItem from "../../components/GroupListItem";
+import Input from "../../components/Input/Input";
 import {
   groupQuerySelector,
   groupSelector,
@@ -26,13 +27,15 @@ const GroupList: React.FC<Props> = (props) => {
       <div className="flex-1">
         <div className="flex items-center p-2 mb-6 bg-white border border-gray-600 rounded-md">
           <FiSearch className="w-6 h-6 text-blue-600" />
-          <input
+          <Input
             className="w-full pl-4 placeholder-gray-300 focus:outline-none"
             placeholder="Type Group Name"
+            value={query}
             onChange={(e) => {
-              groupActions.query(query);
+              groupActions.query(e.target.value);
             }}
           />
+          <FaSpinner className="w-5 h-5 ml-12 animate-spin" />
         </div>
         {groups &&
           groups.map((element, index) => (
