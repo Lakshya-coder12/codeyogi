@@ -4,7 +4,7 @@ import { FiSearch } from "react-icons/fi";
 import GroupListItem from "../../components/GroupListItem";
 import Input from "../../components/Input/Input";
 import {
-  groupLoadingSelector,
+  groupsLoadingSelector,
   groupQuerySelector,
   groupSelector,
 } from "../../selectors/groups.selectors";
@@ -15,7 +15,7 @@ interface Props {}
 
 const GroupList: React.FC<Props> = (props) => {
   const query = useAppSelector(groupQuerySelector);
-  const loading = useAppSelector(groupLoadingSelector);
+  const loading = useAppSelector(groupsLoadingSelector);
   const groups = useAppSelector(groupSelector);
   return (
     <div className="flex items-center px-10 mt-5 space-x-10">
