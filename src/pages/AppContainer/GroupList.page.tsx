@@ -1,10 +1,7 @@
 import React, { useEffect } from "react";
 import { FiSearch } from "react-icons/fi";
-import { useDispatch } from "react-redux";
-import {
-  GROUPS_QUERY,
-  GROUPS_QUERY_COMPLETED,
-} from "../../actions/groups.action";
+import { groupActions } from "../../actions/groups.action";
+
 import { fetchGroups } from "../../api/groups";
 import GroupListItem from "../../components/GroupListItem";
 import {
@@ -18,14 +15,10 @@ interface Props {}
 const GroupList: React.FC<Props> = (props) => {
   const query = useAppSelector(groupQuerySelector);
   const groups = useAppSelector(groupSelector);
-  const dispatch = useDispatch();
   useEffect(() => {
-    fetchGroups({ status: "all-groups", query }).then((groups) => {
-      dispatch({
-        type: GROUPS_QUERY_COMPLETED,
-        payload: { groups: groups, query },
-      });
-    });
+    fetchGroups({ status: "all-groups", query }).then((groups) =>
+      groupActions.queryCompleted(query, groups)
+    );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [query]);
   return (
@@ -37,7 +30,7 @@ const GroupList: React.FC<Props> = (props) => {
             className="w-full pl-4 placeholder-gray-300 focus:outline-none"
             placeholder="Type Group Name"
             onChange={(e) => {
-              dispatch({ type: GROUPS_QUERY, payload: e.target.value });
+              groupActions.query(query);
             }}
           />
         </div>

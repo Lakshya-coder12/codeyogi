@@ -9,13 +9,11 @@ import { useFormik } from "formik";
 import Input from "../../components/Input/Input";
 import Button from "../../components/Button/Button";
 import { login } from "../../api/auth";
-import { useDispatch } from "react-redux";
-import { meLoginAction } from "../../actions/auth.actions";
+import { authActions } from "../../actions/auth.actions";
 
 interface Props {}
 
 const Login: React.FC<Props> = (props) => {
-  const dispatch = useDispatch();
   const [enabled, setEnabled] = useState(false);
   const history = useHistory();
   const formValidator = yup.object().shape({
@@ -39,7 +37,7 @@ const Login: React.FC<Props> = (props) => {
     validationSchema: formValidator,
     onSubmit: (values) => {
       login(values).then((u) => {
-        dispatch(meLoginAction(u));
+        authActions.login(u);
         history.push("/dashboard");
       });
     },
