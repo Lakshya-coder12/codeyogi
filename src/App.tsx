@@ -7,21 +7,19 @@ import NotFoundPage from "./pages/NotFound.page";
 import AuthPageLazy from "./pages/Auth/Auth.lazy";
 import AppContainerPageLazy from "./pages/AppContainer/AppContainer.lazy";
 import { me } from "./api/auth";
-import { useDispatch } from "react-redux";
 import { useAppSelector } from "./store";
-import { meFetchAction } from "./actions/auth.actions";
 import { meSelector } from "./selectors/auth.selectors";
+import { authActions } from "./actions/auth.actions";
 
 function App() {
   const user = useAppSelector(meSelector);
-  const dispatch = useDispatch();
   const token = localStorage.getItem(LS_AUTH_TOKEN);
 
   useEffect(() => {
     if (!token) {
       return;
     }
-    me().then((u) => dispatch(meFetchAction(u)));
+    me().then((u) => authActions.fetch(u));
   }, []); //eslint-disable-line react-hooks/exhaustive-deps
 
   if (!user && token) {
