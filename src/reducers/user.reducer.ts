@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { ME_FETCH, ME_LOGIN } from "../actions/auth.actions";
+import { ME_FETCH, ME_LOGIN } from "../actions/actions.constants";
 import { User } from "../models/User";
 import { addOne, EntityState } from "./entity.reducer";
 
