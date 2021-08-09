@@ -1,27 +1,22 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { FaSpinner } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
-import { groupActions } from "../../actions/groups.action";
-import { fetchGroups } from "../../api/groups";
 import GroupListItem from "../../components/GroupListItem";
 import Input from "../../components/Input/Input";
 import {
+  groupLoadingSelector,
   groupQuerySelector,
   groupSelector,
 } from "../../selectors/groups.selectors";
 import { useAppSelector } from "../../store";
+import { fetchGroups } from "../../middlewares/groups.middleware";
 
 interface Props {}
 
 const GroupList: React.FC<Props> = (props) => {
   const query = useAppSelector(groupQuerySelector);
+  const loading = useAppSelector(groupLoadingSelector);
   const groups = useAppSelector(groupSelector);
-  useEffect(() => {
-    fetchGroups({ status: "all-groups", query }).then((groups) =>
-      groupActions.queryCompleted(query, groups)
-    );
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [query]);
   return (
     <div className="flex items-center px-10 mt-5 space-x-10">
       <div className="flex-1">
@@ -32,10 +27,10 @@ const GroupList: React.FC<Props> = (props) => {
             placeholder="Type Group Name"
             value={query}
             onChange={(e) => {
-              groupActions.query(e.target.value);
+              fetchGroups({ query: e.target.value, status: "all-groups" });
             }}
           />
-          <FaSpinner className="w-5 h-5 ml-12 animate-spin" />
+          {loading && <FaSpinner className="w-5 h-5 ml-12 animate-spin" />}
         </div>
         {groups &&
           groups.map((element, index) => (
