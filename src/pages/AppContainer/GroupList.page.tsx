@@ -1,6 +1,8 @@
 import React from "react";
 import { FaSpinner } from "react-icons/fa";
 import { FiSearch } from "react-icons/fi";
+import { useDispatch } from "react-redux";
+import { queryChangedAction } from "../../actions/groups.action";
 import GroupListItem from "../../components/GroupListItem";
 import Input from "../../components/Input/Input";
 import {
@@ -9,7 +11,6 @@ import {
   groupSelector,
 } from "../../selectors/groups.selectors";
 import { useAppSelector } from "../../store";
-import { fetchGroups } from "../../middlewares/groups.middleware";
 
 interface Props {}
 
@@ -17,6 +18,7 @@ const GroupList: React.FC<Props> = (props) => {
   const query = useAppSelector(groupQuerySelector);
   const loading = useAppSelector(groupsLoadingSelector);
   const groups = useAppSelector(groupSelector);
+  const dispatch = useDispatch();
   return (
     <div className="flex items-center px-10 mt-5 space-x-10">
       <div className="flex-1">
@@ -27,7 +29,7 @@ const GroupList: React.FC<Props> = (props) => {
             placeholder="Type Group Name"
             value={query}
             onChange={(e) => {
-              fetchGroups({ query: e.target.value, status: "all-groups" });
+              dispatch(queryChangedAction(e.target.value));
             }}
           />
           {loading && <FaSpinner className="w-5 h-5 ml-12 animate-spin" />}
