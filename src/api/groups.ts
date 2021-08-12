@@ -1,6 +1,6 @@
-import axios, { CancelToken } from "axios";
+import { CancelToken } from "axios";
 import { Group } from "../models/Groups";
-import { BASE_URL } from "./base";
+import { BASE_URL, get } from "./base";
 
 export interface GroupRequest {
   limit?: number;
@@ -15,10 +15,8 @@ export interface GroupResponse {
 
 export const fetchGroups = (data: GroupRequest, token?: CancelToken) => {
   const url = BASE_URL + "/groups";
-  return axios
-    .get<GroupResponse>(url, {
-      params: data,
-      cancelToken: token,
-    })
-    .then((response) => response.data.data);
+  return get<GroupResponse>(url, {
+    params: data,
+    cancelToken: token,
+  });
 };
