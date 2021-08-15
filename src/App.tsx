@@ -20,7 +20,7 @@ function App() {
       return;
     }
     me().then((u) => authActions.fetch(u));
-  }, []); //eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   if (!user && token) {
     return (
@@ -51,6 +51,7 @@ function App() {
             "/recordings",
             "/profile",
             "/batch/:batchNumber/lecture/:lectureNumber",
+            "/groups/:groupID",
             "/groups",
           ]}
           exact
