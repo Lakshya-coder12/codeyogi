@@ -18,7 +18,27 @@ export const groupByIDSelector = createSelector(
 
 export const groupsLoadingSelector = createSelector(
   [groupStateSelector],
-  (groupState) => groupState.loading
+  (groupState) => groupState.loadingList
+);
+
+const selectedIdSelector = createSelector(
+  [groupStateSelector],
+  (groupState) => groupState.selectedID
+);
+
+export const selectedErrorSelector = createSelector(
+  [groupStateSelector],
+  (groupState) => groupState.errorOne
+);
+
+export const selectLoadingSelector = createSelector(
+  [groupStateSelector],
+  (groupState) => groupState.loadingOne
+);
+
+export const selectedGroupSelector = createSelector(
+  [groupByIDSelector, selectedIdSelector],
+  (byID, id) => id && byID[id]
 );
 
 export const groupSelector = createSelector(
