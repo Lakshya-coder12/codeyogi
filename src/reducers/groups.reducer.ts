@@ -2,9 +2,10 @@ import { Reducer } from "redux";
 import {
   GROUPS_QUERY_CHANGED,
   GROUPS_QUERY_COMPLETED,
+  GROUP_FETCH_ONE_COMPLETED,
 } from "../actions/actions.constants";
 import { Group } from "../models/Groups";
-import { addMany, EntityState, getIDs } from "./entity.reducer";
+import { addMany, addOne, EntityState, getIDs } from "./entity.reducer";
 
 export interface GroupState extends EntityState<Group> {
   query: string;
@@ -43,6 +44,8 @@ export const groupReducer: Reducer<GroupState> = (
         },
         loading: false,
       };
+    case GROUP_FETCH_ONE_COMPLETED:
+      return addOne(state, action.payload) as GroupState;
     default:
       return state;
   }
