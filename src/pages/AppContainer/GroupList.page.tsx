@@ -35,11 +35,12 @@ const GroupList: React.FC<Props> = (props) => {
           {loading && <FaSpinner className="w-5 h-5 ml-12 animate-spin" />}
         </div>
         {groups &&
-          groups.map((element, index) => (
+          groups.map((group, index) => (
             <GroupListItem
-              imgURL={element.group_img_url}
-              groupTitle={element.name}
+              imgURL={group.group_img_url}
+              groupTitle={group.name}
               key={index}
+              id={group.id}
             />
           ))}
       </div>
