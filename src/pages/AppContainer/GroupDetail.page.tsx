@@ -17,7 +17,7 @@ const GroupDetail: React.FC<Props> = (props) => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(fetchOneGroup(groupID));
-  }, [groupID]); // eslint-disable-line
+  }, [groupID]);
   if (!group) {
     return <FaSpinner className="w-5 h-5 ml-12 animate-spin" />;
   }
