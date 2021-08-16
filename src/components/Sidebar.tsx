@@ -1,6 +1,6 @@
 import React from "react";
 import SidebarLink from "./SidebarLink";
-import { FiCpu, FiHome } from "react-icons/fi";
+import { FiUser, FiUsers, FiHome } from "react-icons/fi";
 import { Link } from "react-router-dom";
 
 interface Props {}
@@ -13,7 +13,10 @@ const Sidebar: React.FC<Props> = (props) => {
         <SidebarLink title="Dashboard" svg={<FiHome className={svgClass} />} />
       </Link>
       <Link to="/groups">
-        <SidebarLink title="Groups" svg={<FiCpu className={svgClass} />} />
+        <SidebarLink title="Groups" svg={<FiUsers className={svgClass} />} />
+      </Link>
+      <Link to="/users">
+        <SidebarLink title="User" svg={<FiUser className={svgClass} />} />
       </Link>
     </div>
   );
