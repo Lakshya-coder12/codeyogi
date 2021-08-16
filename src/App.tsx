@@ -53,6 +53,8 @@ function App() {
             "/batch/:batchNumber/lecture/:lectureNumber",
             "/groups/:groupID",
             "/groups",
+            "/users",
+            "/users/:userID",
           ]}
           exact
         >
