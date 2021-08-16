@@ -1,6 +1,5 @@
 import React from "react";
 import { useEffect } from "react";
-import { ImSpinner2 } from "react-icons/im";
 import { useDispatch } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import { fetchOneGroup } from "../../actions/groups.action";
@@ -43,13 +42,21 @@ const GroupDetail: React.FC<Props> = (props) => {
   return (
     <div className="h-screen mx-5 mt-10">
       {loading && (
-        <div>
-          ...loading
-          <ImSpinner2 className="w-5 h-5 animate-spin" />
+        <div className="w-full max-w-2xl p-4 mx-auto mt-10 mb-2 border border-gray-300 rounded-md shadow">
+          <div className="flex space-x-4 animate-pulse">
+            <div className="w-12 h-12 bg-gray-400 rounded-full"></div>
+            <div className="flex-1 py-1 space-y-4">
+              <div className="w-3/4 h-4 bg-gray-400 rounded"></div>
+              <div className="space-y-2">
+                <div className="h-4 bg-gray-400 rounded"></div>
+                <div className="w-5/6 h-4 bg-gray-400 rounded"></div>
+              </div>
+            </div>
+          </div>
         </div>
       )}
       {group && (
-        <div className="w-full mx-auto bg-white rounded-md shadow-md md:w-1/2 lg:w-1/2">
+        <div className="w-full max-w-2xl mx-auto bg-white rounded-md shadow-md">
           <div className="px-4 pt-4">
             <div className="flex justify-between text-lg font-semibold text-gray-700">
               <Avatar src={group.group_img_url} />
@@ -68,12 +75,12 @@ const GroupDetail: React.FC<Props> = (props) => {
           </div>
         </div>
       )}
-      <div className="flex justify-between mx-auto md:w-1/2 lg:w-1/2">
+      <div className="flex justify-between max-w-2xl mx-auto mt-5">
         <Link to={"/groups/" + (groupID + 1)}>
-          <Button className="mt-5 md:w-1/2 lg:w-1/2">Next</Button>
+          <Button>Next</Button>
         </Link>
         <Link to={"/groups/" + (groupID - 1)}>
-          <Button className="mt-5 md:w-3/4 lg:w-3/4">Previous</Button>
+          <Button>Previous</Button>
         </Link>
       </div>
     </div>
