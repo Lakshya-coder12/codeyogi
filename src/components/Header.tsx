@@ -8,7 +8,6 @@ interface Props {}
 const Header: React.FC<Props> = (props) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isMenuFullyOpen, setIsMenuFullyOpen] = useState(false);
-  console.log("isMenuOpen is ", isMenuOpen);
   return (
     <>
       <div className="flex items-center py-2 bg-header">
