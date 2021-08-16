@@ -1,7 +1,22 @@
 import { Reducer } from "redux";
-import { ME_FETCH, ME_LOGIN } from "../actions/actions.constants";
+import {
+  ME_FETCH,
+  ME_LOGIN,
+  USERS_FETCH,
+  USERS_FETCH_COMPLETED,
+  USERS_FETCH_ONE,
+  USERS_FETCH_ONE_COMPLETED,
+  USERS_FETCH_ONE_ERROR,
+} from "../actions/actions.constants";
 import { User } from "../models/User";
-import { addOne, EntityState, initialEntityState } from "./entity.reducer";
+import {
+  addMany,
+  addOne,
+  EntityState,
+  initialEntityState,
+  select,
+  setErrorForOne,
+} from "./entity.reducer";
 
 export interface UserState extends EntityState<User> {}
 
@@ -17,6 +32,22 @@ export const userReducer: Reducer<UserState> = (
     case ME_LOGIN:
     case ME_FETCH:
       return addOne(state, action.payload) as UserState;
+    case USERS_FETCH_ONE:
+      return select(state, action.payload) as UserState;
+    case USERS_FETCH_ONE_COMPLETED:
+      return addOne(state, action.payload, false) as UserState;
+    case USERS_FETCH_ONE_ERROR:
+      const { id, msg } = action.payload;
+      return setErrorForOne(state, id, msg) as UserState;
+    case USERS_FETCH:
+      return { ...state, loadingList: true };
+    case USERS_FETCH_COMPLETED:
+      const users = action.payload as User[];
+      const newState = addMany(state, users) as UserState;
+      return {
+        ...newState,
+        loadingList: false,
+      };
     default:
       return state;
   }
