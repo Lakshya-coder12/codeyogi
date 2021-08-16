@@ -5,7 +5,7 @@ import { authReducer } from "./reducers/auth.reducer";
 import { groupReducer } from "./reducers/groups.reducer";
 import { userReducer } from "./reducers/user.reducer";
 import { sagaMiddleware } from "./sagas";
-import { watchGroupQueryChanged } from "./sagas/groups.sagas";
+import { rootSaga } from "./sagas/root.sagas";
 
 const reducer = combineReducers({
   auth: authReducer,
@@ -18,7 +18,7 @@ export const store = createStore(
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
-sagaMiddleware.run(watchGroupQueryChanged);
+sagaMiddleware.run(rootSaga);
 
 export type AppState = ReturnType<typeof reducer>;
 
