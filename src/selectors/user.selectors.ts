@@ -6,7 +6,7 @@ export const usersLoadingSelector = createSelector(
   (userState) => userState.loadingList
 );
 
-export const userByIDSelector = createSelector(
+export const usersByIDSelector = createSelector(
   [userStateSelector],
   (userState) => userState.byID
 );
@@ -27,11 +27,11 @@ export const selectLoadingSelector = createSelector(
 );
 
 export const selectedUserSelector = createSelector(
-  [userByIDSelector, selectedIdSelector],
+  [usersByIDSelector, selectedIdSelector],
   (byID, id) => id && byID[id]
 );
 
-export const userSelector = createSelector([userByIDSelector], (byID) => {
+export const userSelector = createSelector([usersByIDSelector], (byID) => {
   const users = Object.keys(byID).map((id) => byID[+id]);
   return users;
 });
