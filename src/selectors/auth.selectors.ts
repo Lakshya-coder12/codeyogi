@@ -9,5 +9,5 @@ const meIDSelector = createSelector(
 
 export const meSelector = createSelector(
   [meIDSelector, usersByIDSelector],
-  (id, usersByID) => id && usersByID[id]
+  (id, usersByID) => (id === undefined ? undefined : usersByID[id])
 );
