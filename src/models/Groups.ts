@@ -6,4 +6,6 @@ export interface Group extends Entity {
   group_img_url: string;
   description: string;
   creator: User;
+  invitedMembers: User[];
+  participants: User[];
 }
