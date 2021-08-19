@@ -1,9 +1,13 @@
 import { createSelector } from "reselect";
-import { authStateSelector, userStateSelector } from "./app.selectors";
+import { authStateSelector } from "./app.selectors";
+import { usersByIDSelector } from "./user.selectors";
+
+const meIDSelector = createSelector(
+  [authStateSelector],
+  (authState) => authState.id
+);
 
 export const meSelector = createSelector(
-  [authStateSelector, userStateSelector],
-  (auth, users) => {
-    return auth.id !== undefined ? users.byID[auth.id] : undefined;
-  }
+  [meIDSelector, usersByIDSelector],
+  (id, usersByID) => id && usersByID[id]
 );
