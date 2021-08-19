@@ -11,6 +11,11 @@ export const groupQueryMapSelector = createSelector(
   (groupState) => groupState.queryMap
 );
 
+export const queryIDsSelector = createSelector(
+  [groupQuerySelector, groupQueryMapSelector],
+  (query, queryMap) => queryMap[query] || []
+);
+
 export const groupByIDSelector = createSelector(
   [groupStateSelector],
   (groupState) => groupState.byID
@@ -42,9 +47,8 @@ export const selectedGroupSelector = createSelector(
 );
 
 export const groupSelector = createSelector(
-  [groupQuerySelector, groupQueryMapSelector, groupByIDSelector],
-  (query, queryMap, byID) => {
-    const groupsIDs = queryMap[query] || [];
+  [queryIDsSelector, groupByIDSelector],
+  (groupsIDs, byID) => {
     const groups = groupsIDs.map((id) => byID[id]);
     return groups;
   }
