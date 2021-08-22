@@ -4,8 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import { authReducer } from "./reducers/auth.reducer";
 import { groupReducer } from "./reducers/groups.reducer";
 import { userReducer } from "./reducers/user.reducer";
-import { sagaMiddleware } from "./sagas";
-import { rootSaga } from "./sagas/root.sagas";
+import { rootSaga, sagaMiddleware } from "./sagas";
 
 const reducer = combineReducers({
   auth: authReducer,
