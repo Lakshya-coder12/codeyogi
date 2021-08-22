@@ -1,5 +1,6 @@
-import { call, put } from "@redux-saga/core/effects";
+import { all, call, put, takeEvery } from "@redux-saga/core/effects";
 import { AnyAction } from "redux";
+import { USERS_FETCH, USERS_FETCH_ONE } from "../actions/actions.constants";
 import {
   fetchOneUserCompleted,
   fetchOneUserError,
@@ -21,4 +22,11 @@ export function* fetchUsers(action: AnyAction): Generator<any> {
   const userResponse: any = yield call(fetchUsersAPI);
   console.log(userResponse.data.data);
   yield put(fetchUsersCompleted(userResponse.data.data));
+}
+
+export function* watchUserActions() {
+  yield all([
+    takeEvery(USERS_FETCH_ONE, fetchOne),
+    takeEvery(USERS_FETCH, fetchUsers),
+  ]);
 }
