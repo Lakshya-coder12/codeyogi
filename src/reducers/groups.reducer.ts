@@ -52,14 +52,14 @@ export const groupReducer: Reducer<GroupState> = (
       const groups = action.payload.groups as Group[];
       const groupIds = getIDs(groups);
       const newState = addMany(state, groups) as GroupState;
-      const participantIdsbyId = groups.reduce((participantIdsbyId, group) => {
+      const participantIdsById = groups.reduce((participantIdsById, group) => {
         const participantIds = group.participants.map((p) => p.id);
-        return { ...participantIdsbyId, [group.id]: participantIds };
+        return { ...participantIdsById, [group.id]: participantIds };
       }, {});
-      const invitedMembersIdsbyId = groups.reduce(
-        (invitedMembersIdsbyId, group) => {
+      const invitedMembersIdsById = groups.reduce(
+        (invitedMembersIdsById, group) => {
           const invitedMembersIds = group.invitedMembers.map((m) => m.id);
-          return { ...invitedMembersIdsbyId, [group.id]: invitedMembersIds };
+          return { ...invitedMembersIdsById, [group.id]: invitedMembersIds };
         },
         {}
       );
@@ -74,8 +74,8 @@ export const groupReducer: Reducer<GroupState> = (
         },
         loadingList: false,
         creators: { ...state.creators, ...creatorById },
-        participants: { ...state.participants, ...participantIdsbyId },
-        invitedMembers: { ...state.invitedMembers, ...invitedMembersIdsbyId },
+        participants: { ...state.participants, ...participantIdsById },
+        invitedMembers: { ...state.invitedMembers, ...invitedMembersIdsById },
       };
     case GROUP_FETCH_ONE_COMPLETED: {
       const group = action.payload as Group;

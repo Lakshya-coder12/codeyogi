@@ -40,7 +40,7 @@ export const userReducer: Reducer<UserState> = (
     case USERS_FETCH_ONE_COMPLETED:
       return addOne(state, action.payload, false) as UserState;
     case GROUPS_QUERY_COMPLETED: {
-      const groups = action.payload as Group[];
+      const groups = action.payload.groups as Group[];
       const users = groups.reduce((users: User[], group) => {
         return [
           ...users,
