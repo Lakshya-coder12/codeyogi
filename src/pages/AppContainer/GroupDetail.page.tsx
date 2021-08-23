@@ -67,9 +67,9 @@ const GroupDetail: React.FC<Props> = (props) => {
             </div>
             <h3 className="mt-8 font-semibold text-gray-700">Created By</h3>
             <div className="flex justify-between pb-8 mt-4">
-              <Avatar src={group.creator.profile_pic_url} />
+              <Avatar src={group.creator && group.creator.profile_pic_url} />
               <div className="text-lg font-semibold text-gray-700">
-                {group.creator.first_name}
+                {group.creator && group.creator.first_name}
               </div>
             </div>
           </div>

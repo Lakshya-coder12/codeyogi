@@ -49,9 +49,15 @@ export const selectedGroupSelector = createSelector(
       return undefined;
     }
     const group = byID[id];
-    const creator = usersByID[group.creator as any];
-    const participants = group.participants.map((p: any) => usersByID[p]);
-    const invitedMembers = group.invitedMembers.map((m: any) => usersByID[m]);
+    const creator = group && group.creator && usersByID[group.creator as any];
+    const participants =
+      group &&
+      group.participants &&
+      group.participants.map((p: any) => usersByID[p]);
+    const invitedMembers =
+      group &&
+      group.invitedMembers &&
+      group.invitedMembers.map((m: any) => usersByID[m]);
     return { ...group, creator, participants, invitedMembers };
   }
 );
