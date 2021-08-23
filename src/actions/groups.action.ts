@@ -11,9 +11,12 @@ export const queryChangedAction = (query: string) => ({
   type: GROUPS_QUERY_CHANGED,
   payload: query,
 });
-export const queryCompletedAction = (query: string, groups: Group[]) => ({
+export const queryCompletedAction = (
+  query: string,
+  groupsByID: { [id: number]: Group }
+) => ({
   type: GROUPS_QUERY_COMPLETED,
-  payload: { query, groups },
+  payload: { query, groupsByID },
 });
 
 export const fetchOneGroup = (id: number) => ({
