@@ -46,11 +46,11 @@ const GroupList: React.FC<Props> = (props) => {
         </div>
       )}
       {groups &&
-        groups.map((group, index) => (
+        groups.map((group) => (
           <GroupListItem
             imgURL={group.group_img_url}
             groupTitle={group.name}
-            key={index}
+            key={group.id}
             id={group.id}
           />
         ))}

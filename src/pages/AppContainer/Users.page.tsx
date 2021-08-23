@@ -37,7 +37,10 @@ const Users: React.FC<Props> = (props) => {
       )}
       <div>
         {users.map((u) => (
-          <div className="w-full max-w-xl p-5 mx-auto mt-4 bg-white rounded-md shadow-md">
+          <div
+            className="w-full max-w-xl p-5 mx-auto mt-4 bg-white rounded-md shadow-md"
+            key={u.id}
+          >
             <div className="flex space-x-10">
               <Avatar src={u.profile_pic_url} />
               <div className="flex space-x-1">
