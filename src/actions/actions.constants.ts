@@ -13,6 +13,7 @@ export const GROUPS_QUERY_COMPLETED = "groups/query_completed";
 //Users
 export const USERS_FETCH = "users/fetch";
 export const USERS_FETCH_COMPLETED = "users/fetch_completed";
+export const USER_LIST_RECEIVED = "users/list_received";
 
 export const USERS_FETCH_ONE = "users/fetch_one";
 export const USERS_FETCH_ONE_COMPLETED = "users/fetch_one_completed";
