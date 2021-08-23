@@ -39,7 +39,7 @@ const UserDetail: React.FC<Props> = (props) => {
     );
   }
   return (
-    <div className="h-screen mx-5 mt-10">
+    <div className="mx-5 mt-10">
       {loading && (
         <div className="w-full max-w-xl p-4 mx-auto mt-10 border border-gray-300 rounded-md shadow">
           <div className="flex space-x-4 animate-pulse">
