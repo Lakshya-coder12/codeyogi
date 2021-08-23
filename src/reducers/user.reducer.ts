@@ -1,7 +1,5 @@
 import { Reducer } from "redux";
 import {
-  GROUPS_QUERY_COMPLETED,
-  GROUP_FETCH_ONE_COMPLETED,
   ME_FETCH,
   ME_LOGIN,
   USERS_FETCH,
@@ -9,8 +7,8 @@ import {
   USERS_FETCH_ONE,
   USERS_FETCH_ONE_COMPLETED,
   USERS_FETCH_ONE_ERROR,
+  USER_LIST_RECEIVED,
 } from "../actions/actions.constants";
-import { Group } from "../models/Groups";
 import { User } from "../models/User";
 import {
   addMany,
@@ -39,27 +37,6 @@ export const userReducer: Reducer<UserState> = (
       return select(state, action.payload) as UserState;
     case USERS_FETCH_ONE_COMPLETED:
       return addOne(state, action.payload, false) as UserState;
-    case GROUPS_QUERY_COMPLETED: {
-      const groups = action.payload.groups as Group[];
-      const users = groups.reduce((users: User[], group) => {
-        return [
-          ...users,
-          group.creator,
-          ...group.participants,
-          ...group.invitedMembers,
-        ];
-      }, []);
-      return addMany(state, users) as UserState;
-    }
-    case GROUP_FETCH_ONE_COMPLETED: {
-      const group = action.payload as Group;
-      const users = [
-        group.creator,
-        ...group.participants,
-        ...group.invitedMembers,
-      ];
-      return addMany(state, users) as UserState;
-    }
     case USERS_FETCH_ONE_ERROR:
       const { id, msg } = action.payload;
       return setErrorForOne(state, id, msg) as UserState;
@@ -72,6 +49,9 @@ export const userReducer: Reducer<UserState> = (
         ...newState,
         loadingList: false,
       };
+    case USER_LIST_RECEIVED: {
+      return { ...state, byID: { ...state.byID, ...action.payload } };
+    }
     default:
       return state;
   }
