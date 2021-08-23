@@ -6,6 +6,7 @@ import {
   takeLatest,
   takeEvery,
 } from "@redux-saga/core/effects";
+import { normalize } from "normalizr";
 import { AnyAction } from "redux";
 import {
   GROUPS_QUERY_CHANGED,
@@ -16,7 +17,9 @@ import {
   fetchOneGroupError,
   queryCompletedAction,
 } from "../actions/groups.action";
+import { userListReceived } from "../actions/users.actions";
 import { fetchGroups as fetchGroupsAPI, fetchOneGroup } from "../api/groups";
+import { groupSchema } from "../models/schemas";
 
 export function* fetchOne(action: AnyAction): Generator<any> {
   try {
@@ -35,8 +38,9 @@ export function* fetchGroups(action: AnyAction): Generator<any> {
     query: action.payload,
     status: "all-groups",
   });
-  console.log(groupsResponse.data.data);
-  yield put(queryCompletedAction(action.payload, groupsResponse.data.data));
+  const data = normalize(groupsResponse.data.data, [groupSchema]);
+  yield put(queryCompletedAction(action.payload, data.entities.groups as any));
+  yield put(userListReceived(data.entities.users as any));
 }
 
 export function* watchGroupActions() {
