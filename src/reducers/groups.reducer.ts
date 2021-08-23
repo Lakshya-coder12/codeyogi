@@ -1,3 +1,4 @@
+import { normalize } from "normalizr";
 import { Reducer } from "redux";
 import {
   GROUPS_QUERY_CHANGED,
@@ -7,11 +8,9 @@ import {
   GROUP_FETCH_ONE_ERROR,
 } from "../actions/actions.constants";
 import { Group } from "../models/Groups";
+import { groupSchema } from "../models/schemas";
 import {
-  addMany,
-  addOne,
   EntityState,
-  getIDs,
   initialEntityState,
   select,
   setErrorForOne,
@@ -49,47 +48,23 @@ export const groupReducer: Reducer<GroupState> = (
         loadingList: true,
       };
     case GROUPS_QUERY_COMPLETED:
-      const groups = action.payload.groups as Group[];
-      const groupIds = getIDs(groups);
-      const newState = addMany(state, groups) as GroupState;
-      const participantIdsById = groups.reduce((participantIdsById, group) => {
-        const participantIds = group.participants.map((p) => p.id);
-        return { ...participantIdsById, [group.id]: participantIds };
-      }, {});
-      const invitedMembersIdsById = groups.reduce(
-        (invitedMembersIdsById, group) => {
-          const invitedMembersIds = group.invitedMembers.map((m) => m.id);
-          return { ...invitedMembersIdsById, [group.id]: invitedMembersIds };
-        },
-        {}
-      );
-      const creatorById = groups.reduce((creatorById, group) => {
-        return { ...creatorById, [group.id]: group.creator.id };
-      }, {});
+      const groupsByID = action.payload.groupsByID;
+      const groupIds = Object.keys(groupsByID);
       return {
-        ...newState,
+        ...state,
+        byID: { ...state.byID, ...groupsByID },
         queryMap: {
-          ...newState.queryMap,
+          ...state.queryMap,
           [action.payload.query]: groupIds,
         },
         loadingList: false,
-        creators: { ...state.creators, ...creatorById },
-        participants: { ...state.participants, ...participantIdsById },
-        invitedMembers: { ...state.invitedMembers, ...invitedMembersIdsById },
       };
     case GROUP_FETCH_ONE_COMPLETED: {
-      const group = action.payload as Group;
-      const participantIds = group.participants.map((p) => p.id);
-      const invitedMembersIds = group.invitedMembers.map((m) => m.id);
-      const newState = addOne(state, action.payload, false) as GroupState;
+      const data = normalize(action.payload, [groupSchema]);
       return {
-        ...newState,
-        participants: { ...newState.participants, [group.id]: participantIds },
-        invitedMembers: {
-          ...newState.invitedMembers,
-          [group.id]: invitedMembersIds,
-        },
-        creators: { ...newState.creators, [group.id]: group.creator.id },
+        ...state,
+        byID: { ...state.byID, ...data.entities.groups },
+        loadingOne: false,
       };
     }
     case GROUP_FETCH_ONE_ERROR:
